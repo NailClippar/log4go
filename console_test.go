@@ -6,7 +6,10 @@ import (
 )
 
 func TestColor(t *testing.T) {
-	for level,color := range colors{
-		fmt.Printf("%d"+color("Hello"),level)
+	for level, color := range colors {
+		fmt.Printf("%d"+color("Hello")+"\n", level)
 	}
+}
+func TestConsoleWriter(t *testing.T) {
+	NewConsoleWriter().Write("This is Test ConsoleWriter", LEVEL_DEBUG)
 }

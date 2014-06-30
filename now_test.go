@@ -6,5 +6,5 @@ import (
 )
 
 func TestNowStr(t *testing.T) {
-	fmt.Println(NowStr())
+	fmt.Println(NowStr() + "时间测试字符串")
 }

@@ -29,7 +29,7 @@ type Brush func(string) string
 
 func NewBrush(color string) Brush {
 	preText := "\033[1;"
-	resetText := "\033[0m\n"
+	resetText := "\033[0m"
 	return func(logText string) string {
 		return preText + color + "m" + logText + resetText
 	}
@@ -44,13 +44,27 @@ var colors = []Brush{
 	NewBrush("35"), //FATAL purple
 	NewBrush("0")}  //OFF Close
 
+//levelDetail
+var levelDetail = []string{
+	"A",
+	"D",
+	"W",
+	"E",
+	"F",
+	"O"}
+
 //ConsoleWriter
 
 type ConsoleWriter struct {
 }
 
 func (cw *ConsoleWriter) Write(text string, level int) {
-	fmt.Printf(colors[level](text))
+	textStr := colors[level](text)
+	timeStr := NowStr()
+	levelStr := "[" + colors[level](levelDetail[level]) + "]"
+	go func(timeStr, levelStr, textStr string) {
+		fmt.Printf("%s %s:%s\n", timeStr, levelStr, textStr)
+	}(timeStr, levelStr, textStr)
 }
 func NewConsoleWriter() LogWriter {
 	var logWriter LogWriter = new(ConsoleWriter)

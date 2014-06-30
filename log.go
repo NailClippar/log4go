@@ -47,17 +47,28 @@ type Log struct {
 }
 
 func (this Log) All(text string) {
+	this.doLogWriter(text, LEVEL_ALL)
 }
 func (this Log) Debug(text string) {
+	this.doLogWriter(text, LEVEL_DEBUG)
 }
 func (this Log) Warn(text string) {
+	this.doLogWriter(text, LEVEL_WARN)
 }
 func (this Log) Error(text string) {
+	this.doLogWriter(text, LEVEL_ERROR)
 }
 func (this Log) Fatal(text string) {
+	this.doLogWriter(text, LEVEL_FATAL)
 }
-func (this Log) Off(text string) {
-
+func (this Log) doLogWriter(text string, level int) bool {
+	isTrue := false
+	if level < this.defaultLevel {
+		return isTrue
+	}
+	this.logWriter.Write(text, level)
+	isTrue = true
+	return isTrue
 }
 
 var log *Log
@@ -70,7 +81,6 @@ type Logger interface {
 	Warn(text string)
 	Error(text string)
 	Fatal(text string)
-	Off(text string)
 }
 
 //LogWriter类型
@@ -84,6 +94,7 @@ type LogWriter interface {
 func init() {
 	log = new(Log)
 	log.logWriter = NewConsoleWriter()
+	log.defaultLevel = LEVEL_WARN
 }
 
 //~log.go************************************************
