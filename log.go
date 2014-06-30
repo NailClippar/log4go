@@ -33,11 +33,11 @@ func Error(text string) {
 	log.Error(text)
 }
 func Fatal(text string) {
-	log.FATAL(text)
+	log.Fatal(text)
 }
 
 func SetDisplayLevel(level int) {
-
+	log.defaultLevel = level
 }
 
 //Log类型
