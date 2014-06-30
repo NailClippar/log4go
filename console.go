@@ -42,15 +42,15 @@ var colors = []Brush{
 	NewBrush("33"), //Warn yellow
 	NewBrush("31"), //Error red
 	NewBrush("35"), //FATAL purple
-	NewBrush("0")}
+	NewBrush("0")}  //OFF Close
 
 //ConsoleWriter
 
 type ConsoleWriter struct {
 }
 
-func (cw *ConsoleWriter) Write(text string) {
-	fmt.Printf(text)
+func (cw *ConsoleWriter) Write(text string, level int) {
+	fmt.Printf(colors[level](text))
 }
 func NewConsoleWriter() LogWriter {
 	var logWriter LogWriter = new(ConsoleWriter)

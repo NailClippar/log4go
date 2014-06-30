@@ -1,3 +1,12 @@
+/********************************************************
+*														*
+*	title:log.go										*
+*	author:NailClippar									*
+*	date:2014-6-30										*
+*	env:Ubuntu 14.04 LTS x64 with Golang 1.2.1			*
+*														*
+*********************************************************
+ */
 package log4go
 
 //log level
@@ -12,16 +21,19 @@ const (
 
 //static 方法
 func All(text string) {
+	log.All(text)
 }
 func Debug(text string) {
+	log.Debug(text)
 }
 func Warn(text string) {
+	log.Warn(text)
 }
 func Error(text string) {
-
+	log.Error(text)
 }
-func FATAL(text string) {
-
+func Fatal(text string) {
+	log.FATAL(text)
 }
 
 func SetDisplayLevel(level int) {
@@ -30,19 +42,22 @@ func SetDisplayLevel(level int) {
 
 //Log类型
 type Log struct {
-	logWriter  LogWriter
-	defaultLvl int
+	logWriter    LogWriter
+	defaultLevel int
 }
 
-func (this *Log) All(text string) {
+func (this Log) All(text string) {
 }
-func (this *Log) Debug(text string) {
+func (this Log) Debug(text string) {
 }
-func (this *Log) Warn(text string) {
+func (this Log) Warn(text string) {
 }
-func (this *Log) Error(text string) {
+func (this Log) Error(text string) {
 }
-func (this *Log) FATAL(text string) {
+func (this Log) Fatal(text string) {
+}
+func (this Log) Off(text string) {
+
 }
 
 var log *Log
@@ -54,13 +69,14 @@ type Logger interface {
 	Debug(text string)
 	Warn(text string)
 	Error(text string)
-	FATAL(text string)
+	Fatal(text string)
+	Off(text string)
 }
 
 //LogWriter类型
 //用于声明Writer
 type LogWriter interface {
-	Write(text string)
+	Write(text string, level int)
 }
 
 //init method
@@ -69,3 +85,5 @@ func init() {
 	log = new(Log)
 	log.logWriter = NewConsoleWriter()
 }
+
+//~log.go************************************************
