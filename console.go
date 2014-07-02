@@ -16,13 +16,12 @@ package log4go
 
 import (
 	"fmt"
+	"os"
 	"runtime"
 )
 
 //初始化一些环境参数
-const (
-	NewLine = "\n"
-)
+var NewLine = "\n"
 
 //画刷
 type Brush func(string) string
@@ -62,18 +61,17 @@ func (cw *ConsoleWriter) Write(text string, level int) {
 	textStr := colors[level](text)
 	timeStr := NowStr()
 	levelStr := "[" + colors[level](levelDetail[level]) + "]"
-	go func(timeStr, levelStr, textStr string) {
-		fmt.Printf("%s %s:%s\n", timeStr, levelStr, textStr)
-	}(timeStr, levelStr, textStr)
+	fmt.Fprintf(os.Stdout, "%s %s:%s\n", timeStr, levelStr, textStr)
 }
 func NewConsoleWriter() LogWriter {
 	var logWriter LogWriter = new(ConsoleWriter)
 	return logWriter
 }
 func init() {
-	fmt.Printf("HEHE")
-	var GOOS string = runtime.GOOS
-	fmt.Printf(GOOS + "\n")
+	//env check
+	if runtime.GOOS == "windows" {
+		NewLine = "\r\n"
+	}
 }
 
 //~console.go********************************************

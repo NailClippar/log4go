@@ -4,7 +4,7 @@ import (
 	"log4go"
 )
 
-func Example() {
+func ExampleWriter() {
 	log4go.All("Hello This is Test Log4go.All()")
 	log4go.Debug("Hello This is Test Log4go.Debug()")
 	log4go.Warn("Hello This is Test Log4go.Warn()")
